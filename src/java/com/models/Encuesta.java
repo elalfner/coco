@@ -6,55 +6,45 @@
 package com.models;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author juan
+ * @author elalf
  */
 @Entity
-@Table(name = "encuesta")
-public class Encuesta implements Serializable{
+@Table(name="encuesta")
+@XmlRootElement
+public class Encuesta implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private int id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "titulo")
+    
+    @Column(name = "titulo", nullable=false, unique=false)
     private String titulo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "descripcion")
+
+    @Column(name = "descripcion", nullable=false, unique=false)
     private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_usuario")
+
+    @Column(name = "id_usuario", nullable=false, unique=false)
     private int id_usuario;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "num_preguntas")
+
+    @Column(name = "num_preguntas", nullable=false, unique=false)
     private int num_preguntas;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "visible")
+
+    @Column(name = "visible", nullable=false, unique=false)
     private int visible;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Encuesta() {
     }
 
     public String getTitulo() {
@@ -97,11 +87,64 @@ public class Encuesta implements Serializable{
         this.visible = visible;
     }
 
-    public Encuesta() {
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.titulo);
+        hash = 29 * hash + Objects.hashCode(this.descripcion);
+        hash = 29 * hash + this.id_usuario;
+        hash = 29 * hash + this.num_preguntas;
+        hash = 29 * hash + this.visible;
+        return hash;
     }
-    public Encuesta(int id) {
-        this.id = id;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Encuesta other = (Encuesta) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.id_usuario != other.id_usuario) {
+            return false;
+        }
+        if (this.num_preguntas != other.num_preguntas) {
+            return false;
+        }
+        if (this.visible != other.visible) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        return true;
     }
     
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "com.models.Encuesta[ id=" + id + " ]";
+    }
     
 }

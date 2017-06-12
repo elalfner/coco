@@ -9,6 +9,7 @@ package com.DAO;
  *
  * @author juan
  */
+import com.models.Encuesta;
 import com.models.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,5 +27,26 @@ public class EncuestasDAO {
     
     public EncuestasDAO(){
        
+    }
+    
+    public List<Encuesta> obtencuestas(){
+        try{
+            //em.getTransaction().begin();
+            Query query =  em 
+                    .createQuery("SELECT en FROM Encuesta en where en.visible=1");
+            
+            List<Encuesta> results = (List<Encuesta>) query.getResultList();
+            if (results.isEmpty()) {
+               return null; 
+            }
+            //Encuesta encuesta = results.get(0);
+            
+            
+            return results;
+        }catch(Exception e){
+                return null;
+        }
+       
+        
     }
 }
